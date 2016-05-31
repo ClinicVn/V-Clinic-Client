@@ -1,0 +1,9 @@
+.user-row:hover{
+	background-color: #66FF99 !important;
+}
+.user-row{
+	cursor: pointer;
+}
+thead{
+	background-color: #ea6153 !important;
+}

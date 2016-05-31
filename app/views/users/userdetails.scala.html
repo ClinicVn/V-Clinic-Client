@@ -1,0 +1,20 @@
+@(user: User)
+@import helper._
+@main("Create new user"){
+	<div class="container">
+	<div class="card card-container">
+		@helper.form(action = routes.ProductController.save()) {
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="code"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="password"/>
+			<input type="text" class="form-control" placeholder="" name="confirm-password"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="name"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="address"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="email"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="phoneNumber"/>
+			<input type="text" class="form-control" value="@user.getCode()" placeholder="" name="type"/>
+		}
+		<!-- /form -->
+	</div>
+	<!-- /card-container -->
+	</div>	
+}

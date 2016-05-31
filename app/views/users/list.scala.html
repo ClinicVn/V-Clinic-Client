@@ -1,0 +1,41 @@
+@()
+@views.html.bases.masterpage("List User"){
+	<div class="user-list-head">
+        <link href="@routes.Assets.versioned("users/list/main.css")" rel="stylesheet" media="screen">
+        <script src="@routes.Assets.versioned("users/list/services.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("users/list/main.js")" type="text/javascript"></script>
+    </div>
+    <div class="user-list-content">
+    <table class="table table-striped">
+    	<thead>
+    		<tr>
+    		<th></th>
+    			<th>User name</th>
+    			<th>Full Name</th>
+    			<th>Type</th>
+    			<th>Status</th>
+    			<th>Phone</th>
+    		</tr>
+    	</thead>
+    	<tbody data-bind="foreach:lstUser">
+    		<tr class="user-row">
+    			<td>
+    				<div class="hidden" data-bind="attr:{id: code() + '-options'}">
+    				   <a href="#"><i class="fa fa-info-circle"></i></a>
+					   <a href="#"><i class="fa fa-pencil"></i></a>
+					   <a href="#"><i class="fa fa-trash"></i></a>
+					</div>
+					<div class="data-toolbar" data-bind="attr:{id: code() + '-options-button'}"><i class="fa fa-cog" id="testTool"></i></div>
+    			</td>
+    			<td>
+    				<span data-bind="text:code"></span>
+    			</td>
+    			<td data-bind="text:name"></td>
+    			<td data-bind="text:type"></td>
+    			<td data-bind="text:status"></td>
+    			<td data-bind="text:phone"></td>
+    		</tr>
+    	</tbody>
+    </table>	
+    </div>
+}

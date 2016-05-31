@@ -1,0 +1,32 @@
+@* index Template File *@
+@()
+@views.html.bases.masterpage("Home"){
+	<div class="home-head">
+        <link href="@routes.Assets.versioned("home/main.css")" rel="stylesheet" media="screen">
+        <script src="@routes.Assets.versioned("home/service.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("home/main.js")" type="text/javascript"></script>
+    </div>
+    </head>
+	<div class="col-sm-12" style="margin-bottom:15px">
+		<div class="input-group">
+		    <input type="text" class="form-control" data-bind="textInput: searchValue,
+		    												   valueUpdate: search"/>
+		    <span class="input-group-addon fa-control-search" data-bind="visible: searchValue() == ''">
+		        <i class="fa fa-search"></i>
+		    </span>
+		    <span class="input-group-addon fa-control-search" data-bind="visible: searchValue() !== '', 
+		    															 click:clearSearch">
+		        <i class="fa fa-times"></i>
+		    </span>
+		</div>
+	</div>
+	<div class="menu-content" data-bind="foreach:lstMenu">
+		<div class="col-sm-3 col-xs-6 container hvr-float-shadow" style="padding:15px;" data-bind="
+							visible: visiable">
+			<div data-bind="style: {'background-image': img},
+							attr: {title: title},
+							click: onClick" class="menu-item">
+			</div>
+		</div>
+	</div>
+}

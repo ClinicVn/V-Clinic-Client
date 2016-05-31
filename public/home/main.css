@@ -1,0 +1,17 @@
+.menu-item{
+	border-radius: 5px;
+	background-repeat:no-repeat;
+	background-size: contain;
+	-webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+}
+body{
+    background-image: url("/assets/images/loginBg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.fa-control-search{
+	cursor: pointer;
+}
