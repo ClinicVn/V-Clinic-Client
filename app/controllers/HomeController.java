@@ -40,6 +40,7 @@ public class HomeController extends Controller {
     	final Map<String, String[]> values = request().body().asFormUrlEncoded();
 		String username = values.get("username")[0];
 		String password = values.get("password")[0];
+		String token = values.get("token")[0];
 		if(!homeServices.isValidLogin()){
 			return ok(views.html.home.login.render("Invalid user !"));
 		}

@@ -1,4 +1,3 @@
-
 function listView(){
 	var self = this;
 	self.services = new ListUserService('');
@@ -34,6 +33,15 @@ function UserItem(data){
 	self.status = ko.observable(data.status);
 	self.phone = ko.observable(data.phone);
 	self.type = ko.observable(data.type);
+}
+UserItem.prototype.Edit = function(){
+	
+}
+UserItem.prototype.Info = function(){
+	
+}
+UserItem.prototype.Delete = function(){
+	
 }
 
 $(function(){

@@ -7,3 +7,11 @@
 thead{
 	background-color: #ea6153 !important;
 }
+.user-list-setting-icon{
+	width: 20px;
+	height: 20px;
+	text-align: center;
+}
+.user-list-setting-icon:hover{
+	box-shadow: 2px 2px 2px #888888;
+}

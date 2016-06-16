@@ -16,7 +16,7 @@ public class HomeServices {
 		return lstMenu;
 	}
 	public boolean isLogin(){
-		return false;
+		return true;
 	}
 	public boolean isValidLogin(){
 		return true;
