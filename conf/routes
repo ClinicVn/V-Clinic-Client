@@ -7,7 +7,7 @@
 
 # An example controller showing a sample home page
 GET     /products/list              controllers.ProductController.list()
-GET     /                           controllers.UserController.index()
+GET     /                           controllers.HomeController.index()
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -23,11 +23,11 @@ POST /products/           controllers.ProductController.save()
 DELETE  /products/:ean    controllers.ProductController.delete(ean: String)
 
 # User routes
-POST /users/login/         controllers.UserController.login()
+POST /users/login/         controllers.HomeController.login()
 GET  /users/create         controllers.UserController.create()
 POST /users/save/          controllers.UserController.save()
 # Home controller
-GET /home                  controllers.HomeController.index()
+
 GET /home/menu             controllers.HomeController.listMenu()
 GET /users/list            controllers.UserController.listIndex()
 GET /users/list/data       controllers.UserController.list()

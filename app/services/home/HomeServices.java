@@ -15,4 +15,10 @@ public class HomeServices {
     	lstMenu.add(new Menu("01","User setting","#",""));
 		return lstMenu;
 	}
+	public boolean isLogin(){
+		return false;
+	}
+	public boolean isValidLogin(){
+		return true;
+	}
 }

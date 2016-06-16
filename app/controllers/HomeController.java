@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -28,9 +29,23 @@ public class HomeController extends Controller {
 	HomeServices homeServices;
 	
     public Result index() {
-        return ok(views.html.home.index.render());
+    	if(homeServices.isLogin()){
+    		return ok(views.html.home.index.render());
+    	}
+    	else{
+    		return ok(views.html.home.login.render(""));
+    	}
     }
-    
+    public Result login(){
+    	final Map<String, String[]> values = request().body().asFormUrlEncoded();
+		String username = values.get("username")[0];
+		String password = values.get("password")[0];
+		if(!homeServices.isValidLogin()){
+			return ok(views.html.home.login.render("Invalid user !"));
+		}
+		else
+			return ok(views.html.home.index.render());
+    }
     public Result listMenu(){
     	List<Menu> lstMenu = homeServices.getListMenu();
     	return ok(Json.toJson(lstMenu));

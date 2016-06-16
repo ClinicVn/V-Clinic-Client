@@ -24,29 +24,12 @@ public class UserController  extends Controller{
 	@Inject
 	UserService userService;
 	
-	public Result index(){
-		return ok(views.html.users.login.render(""));
-	}
-	
 	public Result list(){
 		return ok(Json.toJson(userService.getListUser()));
 	}
 	
 	public Result listIndex(){
 		return ok(views.html.users.list.render());
-	}
-	
-	public Result login(){
-		final Map<String, String[]> values = request().body().asFormUrlEncoded();
-		String username = values.get("username")[0];
-		String password = values.get("password")[0];
-		// call service check user here
-		boolean isValid = true;
-		if(!isValid){
-			return ok(views.html.users.login.render("Invalid user !")); 
-		}
-		else
-			return redirect(routes.HomeController.index());
 	}
 	
 	public Result create(){
