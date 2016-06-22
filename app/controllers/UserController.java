@@ -42,11 +42,16 @@ public class UserController  extends Controller{
 		User user = userService.mapUser(values);
 		if(user == null)
 			saveResult = "USER_ERR001";
-		if(userService.isMatchPassword(values))
+		if(saveResult != "" && userService.isMatchPassword(values))
 			saveResult = "USER_ERR002";
-		if(saveResult != "" && !userService.isExistUser(user.getCode()))
+		if(saveResult != "" && userService.isExistUser(user.getCode()))
 			saveResult = "USER_ERR003";
-		UserService.sLstUser.add(user);
+		if(saveResult == "")
+		{
+			UserService.sLstUser.add(user);
+		}
+		values.
+		return ok(Json.toJson(saveResult));
 //		if(userService.isMatchPassword(values) && !userService.isExistUser("xxx")){
 //			// call service here
 //			lstUser.add(userService.mapUser(values));

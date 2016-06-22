@@ -36,6 +36,7 @@ $(function(){
 			var info = {
 				username: $('#username').val(),
 			    password: $('#password').val(),
+			    retype_password: $('#retype-password').val(),
 			    fullname: $('#fullname').val(),
 			    address:  $('#address').val(),
 			    email: $('#email').val(),
@@ -43,14 +44,23 @@ $(function(){
 			    type: $('#type').val()
 			}
 			$.post('/users/save/',info,function(res){
-				
+				if(res === ""){
+					window.location.href = "localhost:9000/users/list";
+				}
+				else{
+					alert(res);
+					window.location.href = "localhost:9000/users/list";
+				}
 			})
 		}
-		$.each(errors, function(index, item){
-			var $LblError = $('<label></label>');
-			$LblError.addClass('error');
-			$LblError.text(item.message);
-			$(item.element).after($LblError);
-		});
+		else{
+			$.each(errors, function(index, item){
+				var $LblError = $('<label></label>');
+				$LblError.addClass('error');
+				$LblError.text(item.message);
+				$(item.element).after($LblError);
+			});
+		}
+		return false;
 	});
 })

@@ -15,7 +15,7 @@ public class UserService {
 	}
 	public boolean isMatchPassword(Map<String, String[]> dataMap){
 		String password = dataMap.get("password")[0];
-		String confirmPassword = dataMap.get("retype-password")[0];
+		String confirmPassword = dataMap.get("retype_password")[0];
 		return password.equals(confirmPassword);
 	}
 	public User mapUser(Map<String, String[]> dataMap){
@@ -39,9 +39,18 @@ public class UserService {
 	public List<UserView> getListUser(){
 		if(UserService.sLstUser.size() == 0)
 		{
-			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","offline","01695563080","Director"));
-			UserService.sLstUser.add(new User(2,"dungvst","Nguyen Van Dung","online","0000001111","Staff"));
+			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","phuongdv2906@gmail.com","Hoang Mai - Ha Noi","123654789","01695563080","online","Director"));
+			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","phuongdv2906@gmail.com","Hoang Mai - Ha Noi","123654789","01695563080","online","Director"));
 		}
-		return UserService.sLstUser;
+		List<UserView> lstView = new ArrayList<UserView>();
+		for(User curUser: UserService.sLstUser){
+			lstView.add(new UserView(curUser.getId()
+					,curUser.getCode()
+					,curUser.getName()
+					,curUser.getStatus()
+					,curUser.getPhoneNumber()
+					,curUser.getType()));
+		}
+		return lstView;
 	}
 }
