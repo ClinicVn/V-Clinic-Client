@@ -35,4 +35,7 @@ $(function(){
 	});
 	//Activates knockout.js
 	ko.applyBindings(new listView());
+	$('#btnNewUser').click(function(){
+		window.location.href = "/users/create";
+	});
 })

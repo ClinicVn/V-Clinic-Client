@@ -29,5 +29,5 @@ POST /users/save/          controllers.UserController.save()
 # Home controller
 
 GET /home/menu             controllers.HomeController.listMenu()
-GET /users/list            controllers.UserController.listIndex()
+GET /users/list            controllers.UserController.index()
 GET /users/list/data       controllers.UserController.list()

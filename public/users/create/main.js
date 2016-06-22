@@ -32,6 +32,20 @@ $(function(){
 	 	}
 	],function(errors, event){
 		$('.error').remove();
+		if(errors.length === 0){
+			var info = {
+				username: $('#username').val(),
+			    password: $('#password').val(),
+			    fullname: $('#fullname').val(),
+			    address:  $('#address').val(),
+			    email: $('#email').val(),
+			    phone: $('#phone').val(),
+			    type: $('#type').val()
+			}
+			$.post('/users/save/',info,function(res){
+				
+			})
+		}
 		$.each(errors, function(index, item){
 			var $LblError = $('<label></label>');
 			$LblError.addClass('error');

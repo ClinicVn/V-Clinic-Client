@@ -28,7 +28,7 @@ public class UserController  extends Controller{
 		return ok(Json.toJson(userService.getListUser()));
 	}
 	
-	public Result listIndex(){
+	public Result index(){
 		return ok(views.html.users.list.render());
 	}
 	
@@ -37,7 +37,16 @@ public class UserController  extends Controller{
 	}
 	
 	public Result save(){
-//		final Map<String, String[]> values = request().body().asFormUrlEncoded();
+		final Map<String, String[]> values = request().body().asFormUrlEncoded();
+		String saveResult = "";
+		User user = userService.mapUser(values);
+		if(user == null)
+			saveResult = "USER_ERR001";
+		if(userService.isMatchPassword(values))
+			saveResult = "USER_ERR002";
+		if(saveResult != "" && !userService.isExistUser(user.getCode()))
+			saveResult = "USER_ERR003";
+		UserService.sLstUser.add(user);
 //		if(userService.isMatchPassword(values) && !userService.isExistUser("xxx")){
 //			// call service here
 //			lstUser.add(userService.mapUser(values));
@@ -46,6 +55,5 @@ public class UserController  extends Controller{
 //		else{
 //			return ok(top.render("User login"));
 //		}
-		return ok(top.render("User login"));
 	}
 }
