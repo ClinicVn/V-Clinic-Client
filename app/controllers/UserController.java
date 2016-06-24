@@ -18,47 +18,49 @@ import play.mvc.Result;
 import services.users.UserService;
 import views.html.*;
 
-public class UserController  extends Controller{
-	public static UserLabel ul  = new UserLabel(1);
-	
+public class UserController extends Controller {
+	public static UserLabel ul = new UserLabel(1);
+
 	@Inject
 	UserService userService;
-	
-	public Result list(){
+
+	public Result list() {
 		return ok(Json.toJson(userService.getListUser()));
 	}
-	
-	public Result index(){
+
+	public Result index() {
 		return ok(views.html.users.list.render());
 	}
-	
-	public Result create(){
+
+	public Result create() {
 		return ok(views.html.users.create.render(ul));
 	}
-	
-	public Result save(){
-		final Map<String, String[]> values = request().body().asFormUrlEncoded();
+
+	public Result save() {
+		final Map<String, String[]> values = request().body()
+				.asFormUrlEncoded();
 		String saveResult = "";
 		User user = userService.mapUser(values);
-		if(user == null)
+		if (user == null)
 			saveResult = "USER_ERR001";
-		if(saveResult != "" && userService.isMatchPassword(values))
+		if (saveResult != "" && userService.isMatchPassword(values))
 			saveResult = "USER_ERR002";
-		if(saveResult != "" && userService.isExistUser(user.getCode()))
+		if (saveResult != "" && userService.isExistUser(user.getCode()))
 			saveResult = "USER_ERR003";
-		if(saveResult == "")
-		{
+		if (saveResult == "") {
 			UserService.sLstUser.add(user);
+			return redirect(routes.UserController.index());
+		} else {
+			return redirect(routes.UserController.create());
 		}
-		values.
-		return ok(Json.toJson(saveResult));
-//		if(userService.isMatchPassword(values) && !userService.isExistUser("xxx")){
-//			// call service here
-//			lstUser.add(userService.mapUser(values));
-//			return redirect(routes.UserController.index());
-//		}
-//		else{
-//			return ok(top.render("User login"));
-//		}
+		// if(userService.isMatchPassword(values) &&
+		// !userService.isExistUser("xxx")){
+		// // call service here
+		// lstUser.add(userService.mapUser(values));
+		// return redirect(routes.UserController.index());
+		// }
+		// else{
+		// return ok(top.render("User login"));
+		// }
 	}
 }
