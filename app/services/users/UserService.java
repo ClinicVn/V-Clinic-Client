@@ -3,12 +3,22 @@ package services.users;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+
+import javax.inject.Inject;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import models.User;
 import models.UserView;
+import play.libs.ws.*;
 
 public class UserService {
 	public static List<User> sLstUser = new ArrayList<User>();
+	@Inject 
+	WSClient ws;
 	public boolean isExistUser(String code){
 		// service check exist user
 		return false;
@@ -37,6 +47,20 @@ public class UserService {
 	}
 	
 	public List<UserView> getListUser(){
+		WSRequest req = ws.url("http:\\localhost:1234\\users");
+		CompletionStage<JsonNode> jsonPromise = req.get()
+		        .thenApply(WSResponse::asJson);
+		CompletableFuture<JsonNode> nodeFuture =  jsonPromise.toCompletableFuture();
+		JsonNode jData = null;
+		try {
+			 jData = nodeFuture.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(UserService.sLstUser.size() == 0)
 		{
 			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","phuongdv2906@gmail.com","Hoang Mai - Ha Noi","123654789","01695563080","online","Director"));
