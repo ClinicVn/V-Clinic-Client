@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import Com.MasterPage;
+import Com.StringValue;
 import play.*;
 import play.api.mvc.Session;
 import play.libs.Json;
@@ -31,7 +32,7 @@ public class HomeController extends MasterPage {
 	HomeServices homeServices;
 	
     public Result index() {
-    	if(session("authen_token") != null){
+    	if(session(StringValue.V00001) != null){
     		return ok(views.html.home.index.render());
     	}
     	else{
@@ -48,13 +49,13 @@ public class HomeController extends MasterPage {
 			result = false;
 		}
 		else{
-			session("authen_token",sResult);
+			session(StringValue.V00001,sResult);
 		}
 		return ok(Json.toJson(result));
     }
     public Result logout(){
-    	if(session("authen_token") != null)
-    		session().remove("authen_token");
+    	if(session(StringValue.V00001) != null)
+    		session().remove(StringValue.V00001);
     	return ok(Json.toJson(true));
     }
     public Result listMenu(){

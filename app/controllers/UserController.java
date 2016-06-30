@@ -7,6 +7,8 @@ import java.util.stream.*;
 
 import javax.inject.Inject;
 
+import Com.MasterPage;
+import Com.StringValue;
 import models.Product;
 import models.User;
 import models.UserLabel;
@@ -19,23 +21,23 @@ import play.mvc.Result;
 import services.users.UserService;
 import views.html.*;
 
-public class UserController extends Controller {
+public class UserController extends MasterPage {
 	public static UserLabel ul = new UserLabel(1);
 
 	@Inject
 	UserService userService;
 
 	public Result list() {
-		if(session("authen_token") == null)
-			return ok(Json.toJson(false));
-		List<UserView> lstView = userService.getListUser(session("authen_token"));
+		List<UserView> lstView = userService.getListUser(session(StringValue.V00001));
 		if(lstView == null)
 			return ok(Json.toJson(false));
 		return ok(Json.toJson(lstView));
 	}
-
 	public Result index() {
-		return ok(views.html.users.list.render());
+		if(this.CheckLogin())
+			return ok(views.html.users.list.render());
+		else
+			return redirect(routes.HomeController.index());
 	}
 
 	public Result create() {
