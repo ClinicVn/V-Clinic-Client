@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import Com.MasterPage;
 import Com.StringValue;
 import play.*;
 import play.api.mvc.Session;

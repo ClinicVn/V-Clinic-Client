@@ -7,7 +7,6 @@ import java.util.stream.*;
 
 import javax.inject.Inject;
 
-import Com.MasterPage;
 import Com.StringValue;
 import models.Product;
 import models.User;
