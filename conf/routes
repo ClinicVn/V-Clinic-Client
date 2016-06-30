@@ -24,6 +24,7 @@ DELETE  /products/:ean    controllers.ProductController.delete(ean: String)
 
 # User routes
 POST /users/login/         controllers.HomeController.login()
+GET  /logout               controllers.HomeController.logout()
 GET  /users/create         controllers.UserController.create()
 POST /users/save/          controllers.UserController.save()
 # Home controller

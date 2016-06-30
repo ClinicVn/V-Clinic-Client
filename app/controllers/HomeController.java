@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import Com.MasterPage;
 import play.*;
 import play.api.mvc.Session;
 import play.libs.Json;
@@ -18,7 +19,7 @@ import models.*;
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class HomeController extends Controller {
+public class HomeController extends MasterPage {
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -50,6 +51,11 @@ public class HomeController extends Controller {
 			session("authen_token",sResult);
 		}
 		return ok(Json.toJson(result));
+    }
+    public Result logout(){
+    	if(session("authen_token") != null)
+    		session().remove("authen_token");
+    	return ok(Json.toJson(true));
     }
     public Result listMenu(){
     	List<Menu> lstMenu = homeServices.getListMenu();

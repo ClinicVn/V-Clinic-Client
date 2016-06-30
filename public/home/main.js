@@ -44,7 +44,7 @@ HomeView.prototype.init = function(){
 		self.isReady(true);
 	});
 	// 
-	self.masterPage.visiableTop(true);
+	//self.masterPage.visiableTop(true);
 }
 function MenuItem(data){
 	var self = this;
