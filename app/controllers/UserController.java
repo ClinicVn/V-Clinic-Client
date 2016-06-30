@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import models.Product;
 import models.User;
 import models.UserLabel;
+import models.UserView;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -25,7 +26,12 @@ public class UserController extends Controller {
 	UserService userService;
 
 	public Result list() {
-		return ok(Json.toJson(userService.getListUser()));
+		if(session("authen_token") == null)
+			return ok(Json.toJson(false));
+		List<UserView> lstView = userService.getListUser(session("authen_token"));
+		if(lstView == null)
+			return ok(Json.toJson(false));
+		return ok(Json.toJson(lstView));
 	}
 
 	public Result index() {

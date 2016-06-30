@@ -6,6 +6,8 @@ function ListUserService(domain){
 ListUserService.prototype.getListUser = function(){
 	var self = this;
 	return $.get(self.domain + '/users/list/data').then(function(res){
+		if(res === false)
+			return false;
 		var lstMenu = new Array();
 		$.each(res,function(index, item){
 			lstMenu.push({

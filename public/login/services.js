@@ -2,9 +2,14 @@ var LoginService = {};
 LoginService.SubmitLogin = function(input){
 	$.post("/users/login/",{
 		username: input.username,
-		password: input.password,
-		token: input.token
+		password: input.password
 	},function(res, status){
-		window.location.href = "/home";
+		if(res === true)
+			window.location.reload();
+		else
+			{
+				$('#msgError').text("Invalid account");
+			}
+		//window.location.href = "/home";
 	});
 }

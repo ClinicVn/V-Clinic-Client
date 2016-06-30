@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import play.*;
 import play.api.mvc.Session;
@@ -29,7 +30,7 @@ public class HomeController extends Controller {
 	HomeServices homeServices;
 	
     public Result index() {
-    	if(homeServices.isLogin()){
+    	if(session("authen_token") != null){
     		return ok(views.html.home.index.render());
     	}
     	else{
@@ -40,12 +41,15 @@ public class HomeController extends Controller {
     	final Map<String, String[]> values = request().body().asFormUrlEncoded();
 		String username = values.get("username")[0];
 		String password = values.get("password")[0];
-		String token = values.get("token")[0];
-		if(!homeServices.isValidLogin()){
-			return ok(views.html.home.login.render("Invalid user !"));
+		boolean result = true;
+		String sResult = homeServices.isValidLogin(username, password);
+		if(sResult == ""){
+			result = false;
 		}
-		else
-			return ok(views.html.home.index.render());
+		else{
+			session("authen_token",sResult);
+		}
+		return ok(Json.toJson(result));
     }
     public Result listMenu(){
     	List<Menu> lstMenu = homeServices.getListMenu();

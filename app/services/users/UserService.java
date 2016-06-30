@@ -10,7 +10,9 @@ import java.util.concurrent.ExecutionException;
 import javax.inject.Inject;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
+import Com.ServiceUrl;
 import models.User;
 import models.UserView;
 import play.libs.ws.*;
@@ -46,8 +48,9 @@ public class UserService {
 		
 	}
 	
-	public List<UserView> getListUser(){
-		WSRequest req = ws.url("http:\\localhost:1234\\users");
+	public List<UserView> getListUser(String token){
+		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER);
+		req.setHeader("X-AUTH-TOKEN", token);
 		CompletionStage<JsonNode> jsonPromise = req.get()
 		        .thenApply(WSResponse::asJson);
 		CompletableFuture<JsonNode> nodeFuture =  jsonPromise.toCompletableFuture();
@@ -57,23 +60,23 @@ public class UserService {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		if(UserService.sLstUser.size() == 0)
-		{
-			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","phuongdv2906@gmail.com","Hoang Mai - Ha Noi","123654789","01695563080","online","Director"));
-			UserService.sLstUser.add(new User(1,"phuongdv","Do Van Phuong","phuongdv2906@gmail.com","Hoang Mai - Ha Noi","123654789","01695563080","online","Director"));
-		}
+		ArrayNode lstUser = (ArrayNode)jData.get("data");
 		List<UserView> lstView = new ArrayList<UserView>();
-		for(User curUser: UserService.sLstUser){
-			lstView.add(new UserView(curUser.getId()
-					,curUser.getCode()
-					,curUser.getName()
-					,curUser.getStatus()
-					,curUser.getPhoneNumber()
-					,curUser.getType()));
+		UserView curUser = null;
+		for(JsonNode jNode: lstUser){
+			curUser = new UserView(Integer.parseInt(jNode.get("id").asText())
+							,jNode.get("code").asText()
+							,jNode.get("name").asText()
+							,jNode.get("status").asText()
+							,jNode.get("phoneNumber").asText()
+							,jNode.get("type").asText());
+			lstView.add(curUser);
 		}
 		return lstView;
 	}

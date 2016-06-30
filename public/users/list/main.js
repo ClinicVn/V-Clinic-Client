@@ -10,18 +10,22 @@ function listView(){
 listView.prototype.init = function(){
 	var self = this;
 	self.services.getListUser().done(function(res){
-		$.each(res, function(i, user){
-			self.lstUser.push(new UserItem(user));
-		});
-		self.isReady(true);
-		$.each(self.lstUser(),function(i, user){
-			$('#'+user.code()+'-options-button').toolbar({
-				content: '#' +user.code()+'-options',
-				position: 'left',
-				event: 'click',
-				hideOnClick: true
+		if(res === false)
+			window.location.href = "http://localhost:9000/";
+		else{
+			$.each(res, function(i, user){
+				self.lstUser.push(new UserItem(user));
 			});
-		});
+			self.isReady(true);
+			$.each(self.lstUser(),function(i, user){
+				$('#'+user.code()+'-options-button').toolbar({
+					content: '#' +user.code()+'-options',
+					position: 'left',
+					event: 'click',
+					hideOnClick: true
+				});
+			});
+		}
 	});
 }
 
