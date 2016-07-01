@@ -150,7 +150,6 @@ public class User implements Serializable, IClinicModel {
 		// TODO Auto-generated method stub
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			mapper.writerWithView(ViewsMode.OnlyView.class).writeValueAsString(this);
 			return Json.parse(mapper.writerWithView(ViewsMode.OnlyView.class).writeValueAsString(this));
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block

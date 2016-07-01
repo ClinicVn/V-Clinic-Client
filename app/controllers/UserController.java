@@ -8,6 +8,7 @@ import java.util.stream.*;
 import javax.inject.Inject;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import Com.StringValue;
 import models.ClinicMessage;
@@ -30,10 +31,10 @@ public class UserController extends MasterPage {
 	UserService userService;
 
 	public Result list() {
-		List<JsonNode> lstView = userService.getListUser(session(StringValue.V00001));
+		ArrayNode lstView = userService.getListUser(session(StringValue.V00001));
 		if(lstView == null)
 			return ok(Json.toJson(false));
-		return ok(Json.toJson(lstView));
+		return ok(lstView);
 	}
 	public Result index() {
 		if(this.CheckLogin())

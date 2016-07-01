@@ -97,19 +97,21 @@ public class UserService {
 		return lstError;
 	}
 
-	public List<JsonNode> getListUser(String token) {
+	public ArrayNode getListUser(String token) {
 		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER);
 		req.setHeader("X-AUTH-TOKEN", token);
 		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(WSResponse::asJson);
 		CompletableFuture<JsonNode> nodeFuture = jsonPromise.toCompletableFuture();
 		JsonNode jData = null;
-		List<JsonNode> lstView = new ArrayList<JsonNode>();
+		ArrayNode lstView = new ArrayNode(null);
 		try {
 			jData = nodeFuture.get();
 			ArrayNode lstUser = (ArrayNode) jData.get("data");
 			ObjectMapper mapper = new ObjectMapper();
 			for (JsonNode jNode : lstUser) {
 				User user = mapper.readValue(jNode.toString(), User.class);
+				String x = mapper.writeValueAsString(user);
+				String z = x;
 				lstView.add(user.getView());
 			}
 		} catch (Exception e) {
