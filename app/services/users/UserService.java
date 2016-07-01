@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import Com.ServiceUrl;
+import Com.StringValue;
+import models.ClinicMessage;
 import models.User;
 import models.UserView;
 import play.libs.ws.*;
@@ -30,7 +32,9 @@ public class UserService {
 		String confirmPassword = dataMap.get("retype_password")[0];
 		return password.equals(confirmPassword);
 	}
-	public User mapUser(Map<String, String[]> dataMap){
+	
+	public List<ClinicMessage> save(Map<String, String[]> dataMap, String token){
+		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
 		try{
 			User user = new User();
 			user.setCode(dataMap.get("username")[0]);
@@ -40,12 +44,58 @@ public class UserService {
 			user.setEmail(dataMap.get("email")[0]);
 			user.setPhoneNumber(dataMap.get("phone")[0]);
 			user.setType(dataMap.get("type")[0]);
-			return user;
+			// save user
+			WSRequest req = ws.url(ServiceUrl.SAVE_USER + "?"
+					+ "code=" + user.getCode()
+					+ "&email=" + user.getEmail()
+					+ "&name=" + user.getName()
+					+ "&password=" + user.getPassword()
+					+ "&phoneNumber=" + user.getPhoneNumber()
+					+ "&type=" + user.getType());
+			req.setHeader("X-AUTH-TOKEN", token);
 		}catch(Exception ex)
 		{
-			return null;
+			lstError.add(new ClinicMessage("Exception",StringValue.ERR00000));
 		}
-		
+		return lstError;
+	}
+	
+	public List<ClinicMessage> validInputUserInfo(Map<String, String[]> dataMap,String token){
+		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
+		try{
+			String account = dataMap.get("username")[0];
+			String password = dataMap.get("password")[0];
+			String re_password = dataMap.get("retype_password")[0];
+			String name = dataMap.get("fullname")[0];
+			String phone = dataMap.get("phone")[0];
+			String type = dataMap.get("type")[0];
+			// account check
+			if(account.trim() == "")
+				lstError.add(new ClinicMessage("username",StringValue.ERR00005));
+			else if(account.trim().length() > 30)
+				lstError.add(new ClinicMessage("username",StringValue.ERR00006));
+			else if(account.trim().length() < 6)
+				lstError.add(new ClinicMessage("username",StringValue.ERR00002));
+			else if(this.getListUser(token).stream().anyMatch( user -> user.getCode() == account))
+				lstError.add(new ClinicMessage("username",StringValue.ERR00001));
+			// password check
+			if(password.trim() == "")
+				lstError.add(new ClinicMessage("password",StringValue.ERR00005));
+			else if(password.trim().length() < 6)
+				lstError.add(new ClinicMessage("password",StringValue.ERR00003));
+			else if(!password.equals(re_password))
+				lstError.add(new ClinicMessage("retype-password",StringValue.ERR00004));
+			// name check
+			if(name.trim() == "")
+				lstError.add(new ClinicMessage("fullname",StringValue.ERR00005));
+			// type check
+			if(type.trim() == "")
+				lstError.add(new ClinicMessage("type",StringValue.ERR00005));
+		}
+		catch(Exception ex){
+			lstError.add(new ClinicMessage("Exception",StringValue.ERR00000));
+		}
+		return lstError;
 	}
 	
 	public List<UserView> getListUser(String token){

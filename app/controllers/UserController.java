@@ -8,6 +8,7 @@ import java.util.stream.*;
 import javax.inject.Inject;
 
 import Com.StringValue;
+import models.ClinicMessage;
 import models.Product;
 import models.User;
 import models.UserLabel;
@@ -46,28 +47,11 @@ public class UserController extends MasterPage {
 	public Result save() {
 		final Map<String, String[]> values = request().body()
 				.asFormUrlEncoded();
-		String saveResult = "";
-		User user = userService.mapUser(values);
-		if (user == null)
-			saveResult = "USER_ERR001";
-		if (saveResult != "" && userService.isMatchPassword(values))
-			saveResult = "USER_ERR002";
-		if (saveResult != "" && userService.isExistUser(user.getCode()))
-			saveResult = "USER_ERR003";
-		if (saveResult == "") {
-			UserService.sLstUser.add(user);
-			return redirect(routes.UserController.index());
-		} else {
-			return redirect(routes.UserController.create());
+		List<ClinicMessage> lstMsg = userService.validInputUserInfo(values, session(StringValue.V00001));
+		if(lstMsg.size() > 0 ){
+			return ok(Json.toJson(lstMsg));
 		}
-		// if(userService.isMatchPassword(values) &&
-		// !userService.isExistUser("xxx")){
-		// // call service here
-		// lstUser.add(userService.mapUser(values));
-		// return redirect(routes.UserController.index());
-		// }
-		// else{
-		// return ok(top.render("User login"));
-		// }
+		User user = userService.mapUser(values);
+		return ok(Json.toJson(user));
 	}
 }
