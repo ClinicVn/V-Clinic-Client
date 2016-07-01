@@ -7,6 +7,8 @@ import java.util.stream.*;
 
 import javax.inject.Inject;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import Com.StringValue;
 import models.ClinicMessage;
 import models.Product;
@@ -28,7 +30,7 @@ public class UserController extends MasterPage {
 	UserService userService;
 
 	public Result list() {
-		List<UserView> lstView = userService.getListUser(session(StringValue.V00001));
+		List<JsonNode> lstView = userService.getListUser(session(StringValue.V00001));
 		if(lstView == null)
 			return ok(Json.toJson(false));
 		return ok(Json.toJson(lstView));
@@ -51,7 +53,7 @@ public class UserController extends MasterPage {
 		if(lstMsg.size() > 0 ){
 			return ok(Json.toJson(lstMsg));
 		}
-		User user = userService.mapUser(values);
-		return ok(Json.toJson(user));
+		//User user = userService.mapUser(values);
+		return ok(Json.toJson(false));
 	}
 }

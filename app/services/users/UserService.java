@@ -78,8 +78,6 @@ public class UserService {
 				lstError.add(new ClinicMessage("username", StringValue.ERR00006));
 			else if (account.trim().length() < 6)
 				lstError.add(new ClinicMessage("username", StringValue.ERR00002));
-			else if (this.getListUser(token).stream().anyMatch(user -> user.getCode() == account))
-				lstError.add(new ClinicMessage("username", StringValue.ERR00001));
 			// password check
 			if (password.trim() == "")
 				lstError.add(new ClinicMessage("password", StringValue.ERR00005));
@@ -99,13 +97,13 @@ public class UserService {
 		return lstError;
 	}
 
-	public List<ObjectNode> getListUser(String token) {
+	public List<JsonNode> getListUser(String token) {
 		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER);
 		req.setHeader("X-AUTH-TOKEN", token);
 		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(WSResponse::asJson);
 		CompletableFuture<JsonNode> nodeFuture = jsonPromise.toCompletableFuture();
 		JsonNode jData = null;
-		List<ObjectNode> lstView = new ArrayList<ObjectNode>();
+		List<JsonNode> lstView = new ArrayList<JsonNode>();
 		try {
 			jData = nodeFuture.get();
 			ArrayNode lstUser = (ArrayNode) jData.get("data");

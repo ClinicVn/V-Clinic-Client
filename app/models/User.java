@@ -36,7 +36,14 @@ public class User implements Serializable, IClinicModel {
 	private String status;
 	@JsonView(ViewsMode.OnlyView.class)
 	private String type;
-
+	private String authToken;
+	public String getAuthToken() {
+		return authToken;
+	}
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+	public User(){}
 	public User(int id, String code, String name, String email, String address, String password, String phoneNumber,
 			String status, String type) {
 		this.id = id;
