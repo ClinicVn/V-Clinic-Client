@@ -22,6 +22,7 @@ import Com.StringValue;
 import models.ClinicMessage;
 import models.User;
 import models.UserView;
+import play.libs.Json;
 import play.libs.ws.*;
 
 public class UserService {
@@ -97,21 +98,19 @@ public class UserService {
 		return lstError;
 	}
 
-	public ArrayNode getListUser(String token) {
+	public List<ObjectNode> getListUser(String token) {
 		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER);
 		req.setHeader("X-AUTH-TOKEN", token);
 		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(WSResponse::asJson);
 		CompletableFuture<JsonNode> nodeFuture = jsonPromise.toCompletableFuture();
 		JsonNode jData = null;
-		ArrayNode lstView = new ArrayNode(null);
+		List<ObjectNode> lstView = new ArrayList<ObjectNode>();
 		try {
 			jData = nodeFuture.get();
 			ArrayNode lstUser = (ArrayNode) jData.get("data");
 			ObjectMapper mapper = new ObjectMapper();
 			for (JsonNode jNode : lstUser) {
 				User user = mapper.readValue(jNode.toString(), User.class);
-				String x = mapper.writeValueAsString(user);
-				String z = x;
 				lstView.add(user.getView());
 			}
 		} catch (Exception e) {

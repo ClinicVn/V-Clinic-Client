@@ -146,16 +146,17 @@ public class User implements Serializable, IClinicModel {
 	}
 
 	@Override
-	public JsonNode getView() {
+	public ObjectNode getView() {
 		// TODO Auto-generated method stub
 		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return Json.parse(mapper.writerWithView(ViewsMode.OnlyView.class).writeValueAsString(this));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		ObjectNode node = Json.newObject();
+	    node.put("name",this.name);
+	    node.put("id", this.id);
+	    node.put("code", this.code);
+	    node.put("status", this.status);
+	    node.put("phone", this.phoneNumber);
+	    node.put("type", this.type);
+		return node;
 	}
 
 	@Override

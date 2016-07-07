@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import Com.StringValue;
 import models.ClinicMessage;
@@ -31,10 +32,10 @@ public class UserController extends MasterPage {
 	UserService userService;
 
 	public Result list() {
-		ArrayNode lstView = userService.getListUser(session(StringValue.V00001));
+		List<ObjectNode> lstView = userService.getListUser(session(StringValue.V00001));
 		if(lstView == null)
 			return ok(Json.toJson(false));
-		return ok(lstView);
+		return ok(Json.toJson(lstView));
 	}
 	public Result index() {
 		if(this.CheckLogin())
@@ -44,7 +45,10 @@ public class UserController extends MasterPage {
 	}
 
 	public Result create() {
-		return ok(views.html.users.create.render(ul));
+		if(this.CheckLogin())
+			return ok(views.html.users.create.render(ul));
+		else
+			return redirect(routes.HomeController.index());
 	}
 
 	public Result save() {
@@ -54,7 +58,6 @@ public class UserController extends MasterPage {
 		if(lstMsg.size() > 0 ){
 			return ok(Json.toJson(lstMsg));
 		}
-		//User user = userService.mapUser(values);
 		return ok(Json.toJson(false));
 	}
 }

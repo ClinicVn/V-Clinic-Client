@@ -1,9 +1,10 @@
 package Com;
 
 public class ServiceUrl {
+	private static String SERVICE_HOST = "http://45.117.160.37:9000";
 	// User 
-	public static String GET_LIST_USER = "http://localhost:1234/users";
-	public static String SAVE_USER = "http://localhost:1234/users";
-	// login 
-	public static String LOGIN_SUBMIT = "http://localhost:1234/login";
+	public static String GET_LIST_USER = SERVICE_HOST +   "/users";
+	public static String SAVE_USER = SERVICE_HOST + "/users";
+	// login
+	public static String LOGIN_SUBMIT = SERVICE_HOST + "/login";
 }
