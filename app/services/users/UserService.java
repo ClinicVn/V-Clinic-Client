@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -105,19 +105,20 @@ public class UserService {
 		CompletableFuture<JsonNode> nodeFuture = jsonPromise.toCompletableFuture();
 		JsonNode jData = null;
 		List<ObjectNode> lstView = new ArrayList<ObjectNode>();
-		try {
-			jData = nodeFuture.get();
-			ArrayNode lstUser = (ArrayNode) jData.get("data");
-			ObjectMapper mapper = new ObjectMapper();
-			for (JsonNode jNode : lstUser) {
-				User user = mapper.readValue(jNode.toString(), User.class);
-				lstView.add(user.getView());
+			try {
+				jData = nodeFuture.get();
+				ArrayNode lstUser = (ArrayNode) jData.get("data");
+				ObjectMapper mapper = new ObjectMapper();
+				for (JsonNode jNode : lstUser) {
+					User user = mapper.readValue(jNode.toString(), User.class);
+					String x = mapper.writeValueAsString(user);
+					lstView.add(user.getView());
+				}
+			} catch (InterruptedException | ExecutionException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} 
 		return lstView;
 	}
 }

@@ -20,21 +20,13 @@ import play.libs.Json;
 public class User implements Serializable, IClinicModel {
 
 	private int id;
-	@JsonView(ViewsMode.OnlyView.class)
 	private String address;
-	@JsonView(ViewsMode.Delete.class)
 	private String code;
-	@JsonView(ViewsMode.OnlyView.class)	
 	private String email;
-	@JsonView(ViewsMode.OnlyView.class)
 	private String name;
-	@JsonView(ViewsMode.Create.class)
 	private String password;
-	@JsonView(ViewsMode.OnlyView.class)
 	private String phoneNumber;
-	@JsonView(ViewsMode.OnlyView.class)
 	private String status;
-	@JsonView(ViewsMode.OnlyView.class)
 	private String type;
 	private String authToken;
 	public String getAuthToken() {

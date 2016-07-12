@@ -8,8 +8,6 @@ master.prototype.visiableTop = function(isVisiable){
 }
 $(function(){
 	$('#btnLogout').click(function(){
-		$.get('http://localhost:9000/logout').done(function(res){
-			window.location.href = "http://localhost:9000/";
-		});
+		window.location.href = window.location.origin + "/logout";
 	});
 })

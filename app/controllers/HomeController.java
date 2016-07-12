@@ -55,7 +55,7 @@ public class HomeController extends MasterPage {
     public Result logout(){
     	if(session(StringValue.V00001) != null)
     		session().remove(StringValue.V00001);
-    	return ok(Json.toJson(true));
+    	return redirect(routes.HomeController.index());
     }
     public Result listMenu(){
     	List<Menu> lstMenu = homeServices.getListMenu();

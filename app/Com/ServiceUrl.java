@@ -1,7 +1,7 @@
 package Com;
 
 public class ServiceUrl {
-	private static String SERVICE_HOST = "http://45.117.160.37:9000";
+	private static String SERVICE_HOST = "http://localhost:1234";
 	// User 
 	public static String GET_LIST_USER = SERVICE_HOST +   "/users";
 	public static String SAVE_USER = SERVICE_HOST + "/users";
