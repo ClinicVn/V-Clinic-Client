@@ -111,7 +111,6 @@ public class UserService {
 				ObjectMapper mapper = new ObjectMapper();
 				for (JsonNode jNode : lstUser) {
 					User user = mapper.readValue(jNode.toString(), User.class);
-					String x = mapper.writeValueAsString(user);
 					lstView.add(user.getView());
 				}
 			} catch (InterruptedException | ExecutionException | IOException e) {
