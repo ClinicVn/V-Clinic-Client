@@ -55,9 +55,15 @@ public class UserController extends MasterPage {
 		final Map<String, String[]> values = request().body()
 				.asFormUrlEncoded();
 		List<ClinicMessage> lstMsg = userService.validInputUserInfo(values, session(StringValue.V00001));
-		if(lstMsg.size() > 0 ){
-			return ok(Json.toJson(lstMsg));
+		if(lstMsg.size() == 0 ){
+			lstMsg = userService.save(values, session(StringValue.V00001));
 		}
-		return ok(Json.toJson(false));
+		if(lstMsg.size() == 0){
+			return redirect(routes.UserController.index());
+		}
+		else
+		{
+			return ok(Json.toJson(false));
+		}
 	}
 }

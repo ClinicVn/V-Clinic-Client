@@ -43,20 +43,21 @@ public class UserService {
 
 	public List<ClinicMessage> save(Map<String, String[]> dataMap, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
+		JsonNode jn = Json.toJson(dataMap);
 		try {
 			User user = new User();
-			user.setCode(dataMap.get("username")[0]);
+			user.setCode(dataMap.get("code")[0]);
 			user.setPassword(dataMap.get("password")[0]);
-			user.setName(dataMap.get("fullname")[0]);
+			user.setName(dataMap.get("name")[0]);
 			user.setAddress(dataMap.get("address")[0]);
 			user.setEmail(dataMap.get("email")[0]);
-			user.setPhoneNumber(dataMap.get("phone")[0]);
+			user.setPhoneNumber(dataMap.get("phone_number")[0]);
 			user.setType(dataMap.get("type")[0]);
 			// save user
-			WSRequest req = ws.url(ServiceUrl.SAVE_USER + "?" + "code=" + user.getCode() + "&email=" + user.getEmail()
-					+ "&name=" + user.getName() + "&password=" + user.getPassword() + "&phoneNumber="
-					+ user.getPhoneNumber() + "&type=" + user.getType());
+			WSRequest req = ws.url(ServiceUrl.SAVE_USER);
+			req.setContentType("application/form-data");
 			req.setHeader("X-AUTH-TOKEN", token);
+			req.post(user.getCreate());
 		} catch (Exception ex) {
 			lstError.add(new ClinicMessage("Exception", StringValue.ERR00000));
 		}
@@ -66,11 +67,11 @@ public class UserService {
 	public List<ClinicMessage> validInputUserInfo(Map<String, String[]> dataMap, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
 		try {
-			String account = dataMap.get("username")[0];
+			String account = dataMap.get("code")[0];
 			String password = dataMap.get("password")[0];
-			String re_password = dataMap.get("retype_password")[0];
-			String name = dataMap.get("fullname")[0];
-			String phone = dataMap.get("phone")[0];
+			String re_password = dataMap.get("retype-password")[0];
+			String name = dataMap.get("name")[0];
+			String phone = dataMap.get("phone_number")[0];
 			String type = dataMap.get("type")[0];
 			// account check
 			if (account.trim() == "")

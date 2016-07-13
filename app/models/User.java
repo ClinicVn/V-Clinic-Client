@@ -25,7 +25,7 @@ public class User implements Serializable, IClinicModel {
 	private String email;
 	private String name;
 	private String password;
-	private String phoneNumber;
+	private String phone_number;
 	private String status;
 	private String type;
 	private String authToken;
@@ -35,7 +35,11 @@ public class User implements Serializable, IClinicModel {
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
 	}
-	public User(){}
+	public User(){
+		this.id = 0;
+		this.status = "1";
+		this.authToken = "";
+	}
 	public User(int id, String code, String name, String email, String address, String password, String phoneNumber,
 			String status, String type) {
 		this.id = id;
@@ -44,7 +48,7 @@ public class User implements Serializable, IClinicModel {
 		this.name = name;
 		this.password = password;
 		this.address = address;
-		this.phoneNumber = phoneNumber;
+		this.phone_number = phoneNumber;
 		this.status = status;
 		this.type = type;
 	}
@@ -98,11 +102,11 @@ public class User implements Serializable, IClinicModel {
 	}
 
 	public String getPhoneNumber() {
-		return this.phoneNumber;
+		return this.phone_number;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		this.phone_number = phoneNumber;
 	}
 
 	public String getStatus() {
@@ -140,28 +144,29 @@ public class User implements Serializable, IClinicModel {
 	@Override
 	public ObjectNode getView() {
 		// TODO Auto-generated method stub
-		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = Json.newObject();
 	    node.put("name",this.name);
 	    node.put("id", this.id);
 	    node.put("code", this.code);
 	    node.put("status", this.status);
-	    node.put("phone", this.phoneNumber);
+	    node.put("phone", this.phone_number);
 	    node.put("type", this.type);
 		return node;
 	}
-
+	
 	@Override
-	public JsonNode getCreate() {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			mapper.writerWithView(ViewsMode.OnlyView.class).writeValueAsString(this);
-			return Json.parse(mapper.writerWithView(ViewsMode.Create.class).writeValueAsString(this));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	public ObjectNode getCreate() {
+		// TODO Auto-generated method stub
+		ObjectNode node = Json.newObject();
+	    node.put("name",this.name);
+	    node.put("address",this.address);
+	    node.put("email",this.email);
+	    node.put("code", this.code);
+	    node.put("password",this.password);
+	    node.put("status", this.status);
+	    node.put("phone_number", this.phone_number);
+	    node.put("type", this.type);
+		return node;
 	}
 
 	@Override

@@ -5,22 +5,22 @@ $(function() {
 	});
 	// validator
 	var userValidator = new FormValidator('create-form', [ {
-		name : 'username',
+		name : 'code',
 		rules : 'required|min_length[5]|max_length[30]'
 	}, {
 		name : 'password',
-		rules : 'required|min_length[10]|max_length[30]'
+		rules : 'required|min_length[9]|max_length[30]'
 	}, {
 		name : 'retype-password',
 		rules : 'required|matches[password]'
 	}, {
-		name : 'fullname',
+		name : 'name',
 		rules : 'required|min_length[5]'
 	}, {
 		name : 'email',
 		rules : 'required|valid_email'
 	}, {
-		name : 'phone',
+		name : 'phone_number',
 		rules : 'required|integer'
 	} ], function(errors, event) {
 		$('.error').remove();
