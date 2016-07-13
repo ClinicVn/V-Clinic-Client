@@ -50,7 +50,25 @@ public class UserController extends MasterPage {
 		else
 			return redirect(routes.HomeController.index());
 	}
-
+	
+	public Result edit(String code){
+		if(!this.CheckLogin())
+			return redirect(routes.HomeController.index());
+		JsonNode userNode =  userService.getUserByCode(code, session(StringValue.V00001));
+		if(userNode == null)
+			return ok(Json.toJson(false));
+		return ok(views.html.users.edit.render(userNode.toString()));
+	}
+	
+	public Result getUserByCode(String code){
+		if(!this.CheckLogin())
+			return ok(Json.toJson(false));
+		JsonNode userNode =  userService.getUserByCode(code, session(StringValue.V00001));
+		if(userNode == null)
+			return ok(Json.toJson(false));
+		return ok(userNode);
+	}
+	
 	public Result save() {
 		final Map<String, String[]> values = request().body()
 				.asFormUrlEncoded();

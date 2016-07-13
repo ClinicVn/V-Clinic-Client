@@ -10,4 +10,7 @@ $(function(){
 	$('#btnLogout').click(function(){
 		window.location.href = window.location.origin + "/logout";
 	});
+	$('#btnHome').click(function(){
+		window.location.href = window.location.origin;
+	});
 })

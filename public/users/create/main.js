@@ -15,13 +15,13 @@ $(function() {
 		rules : 'required|matches[password]'
 	}, {
 		name : 'name',
-		rules : 'required|min_length[5]'
+		rules : 'min_length[5]'
 	}, {
 		name : 'email',
-		rules : 'required|valid_email'
+		rules : 'valid_email'
 	}, {
 		name : 'phone_number',
-		rules : 'required|integer'
+		rules : 'integer'
 	} ], function(errors, event) {
 		$('.error').remove();
 		$.each(errors, function(index, item) {

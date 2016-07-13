@@ -8,7 +8,8 @@ function UserItem(data){
 	self.type = ko.observable(data.type);
 }
 UserItem.prototype.Edit = function(){
-	
+	var x = window.location.origin + this.id();
+	window.location.href = window.location.origin + "/users/edit/" + this.id();
 }
 UserItem.prototype.Info = function(){
 	

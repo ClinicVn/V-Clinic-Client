@@ -1,0 +1,36 @@
+.error{
+	color:red;
+	font-weight: 300;
+	font-size: 12px;
+}
+form { margin: 0px 10px; }
+
+h2 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.container { max-width: 360px; }
+
+.divider {
+  text-align: center;
+  margin-top: 20px; 
+  margin-bottom: 5px;
+}
+
+.divider hr {
+  margin: 7px 0px;
+  width: 35%;
+}
+
+.left { float: left; }
+
+.right { float: right; }
+#div-register{
+	background-color: #f8f8f8;
+	border-color: #e7e7e7;
+	border-radius: 10px;
+	padding-top:10px;
+	max-width: 600px !important;
+	padding-bottom:10px;
+}

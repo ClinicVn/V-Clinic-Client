@@ -27,6 +27,7 @@ POST /users/login/         controllers.HomeController.login()
 GET  /logout               controllers.HomeController.logout()
 GET  /users/create         controllers.UserController.create()
 POST /users/save/          controllers.UserController.save()
+GET /users/edit/:code        controllers.UserController.edit(code: String)
 # Home controller
 
 GET /home/menu             controllers.HomeController.listMenu()

@@ -11,7 +11,7 @@ listView.prototype.init = function(){
 	var self = this;
 	self.services.getListUser().done(function(res){
 		if(res === false)
-			window.location.href = "http://localhost:9000/";
+			window.location.href = window.origin;
 		else{
 			$.each(res, function(i, user){
 				self.lstUser.push(new UserItem(user));

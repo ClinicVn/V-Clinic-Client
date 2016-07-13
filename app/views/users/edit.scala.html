@@ -1,0 +1,70 @@
+@(user : String)
+@views.html.bases.masterpage("Create new user"){
+	<link href="@routes.Assets.versioned("users/edit/main.css")" rel="stylesheet" media="screen">
+	<script src="@routes.Assets.versioned("users/models.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("users/edit/services.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("users/edit/main.js")" type="text/javascript"></script>
+<div style="visibility: hidden;" id="user-info">@user</div>
+<div id="div-register">
+	<div data-bind="with:user">
+		<span data-bind="text:code"></span>
+	</div>
+	<form action="/users/save/" class="form-horizontal" role="form" id="create-form" method="post">
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="username">Username</label>
+      		<div class="col-sm-8">
+      			<span data-bind="text: user.name"></span>
+      		</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="password">Password:</label>
+			<div class="col-sm-8">
+				<input type="password" class="form-control"  name="password" id="password"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="retype-password">RetypePassword:</label>
+			<div class="col-sm-8">
+				<input type="password" class="form-control"  name="retype-password" id="retype-password"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="fullname">Name</label>
+			<div class="col-sm-8">
+			<input data-bind="value:name" class="form-control" type="text" name="name" id="name"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="type">Type:</label>
+			<div class="col-sm-8">
+			<input type="text" class="form-control" data-bind="value:type" name="type" id="type"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="address">Address:</label>
+			<div class="col-sm-8">
+			<input type="text" class="form-control" data-bind="value:address" name="address" id="address"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="email">Email:</label>
+			<div class="col-sm-8">
+			<input type="text" class="form-control" data-bind="value:email" id="email" name="email">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" for="phone">PhoneNumber:</label>
+			<div class="col-sm-8">
+			<input type="text" class="form-control" name="phone_number" id="phone_number"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4" style="text-align: center;">
+				<button class="btn btn-lg btn-primary" id="btn-signup" type="submit">Submmit</button>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+	</form>
+	</div>
+}

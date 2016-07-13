@@ -11,8 +11,6 @@ import java.util.concurrent.ExecutionException;
 import javax.inject.Inject;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -64,7 +62,8 @@ public class UserService {
 		return lstError;
 	}
 
-	public List<ClinicMessage> validInputUserInfo(Map<String, String[]> dataMap, String token) {
+	public List<ClinicMessage> validInputUserInfo(
+			Map<String, String[]> dataMap, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
 		try {
 			String account = dataMap.get("code")[0];
@@ -86,7 +85,8 @@ public class UserService {
 			else if (password.trim().length() < 6)
 				lstError.add(new ClinicMessage("password", StringValue.ERR00003));
 			else if (!password.equals(re_password))
-				lstError.add(new ClinicMessage("retype-password", StringValue.ERR00004));
+				lstError.add(new ClinicMessage("retype-password",
+						StringValue.ERR00004));
 			// name check
 			if (name.trim() == "")
 				lstError.add(new ClinicMessage("fullname", StringValue.ERR00005));
@@ -100,25 +100,45 @@ public class UserService {
 	}
 
 	public List<ObjectNode> getListUser(String token) {
-		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER);
+		WSRequest req = ws.url(ServiceUrl.GET_LIST_USER + "?page=1&size=50");
 		req.setHeader("X-AUTH-TOKEN", token);
-		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(WSResponse::asJson);
-		CompletableFuture<JsonNode> nodeFuture = jsonPromise.toCompletableFuture();
+		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(
+				WSResponse::asJson);
+		CompletableFuture<JsonNode> nodeFuture = jsonPromise
+				.toCompletableFuture();
 		JsonNode jData = null;
 		List<ObjectNode> lstView = new ArrayList<ObjectNode>();
-			try {
-				jData = nodeFuture.get();
-				ArrayNode lstUser = (ArrayNode) jData.get("data");
-				ObjectMapper mapper = new ObjectMapper();
-				for (JsonNode jNode : lstUser) {
-					User user = mapper.readValue(jNode.toString(), User.class);
-					lstView.add(user.getView());
-				}
-			} catch (InterruptedException | ExecutionException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
+		try {
+			jData = nodeFuture.get();
+			ArrayNode lstUser = (ArrayNode) jData.get("data");
+			ObjectMapper mapper = new ObjectMapper();
+			for (JsonNode jNode : lstUser) {
+				User user = mapper.readValue(jNode.toString(), User.class);
+				lstView.add(user.getView());
 			}
+		} catch (InterruptedException | ExecutionException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		return lstView;
+	}
+
+	public JsonNode getUserByCode(String code, String token) {
+		WSRequest req = ws.url(ServiceUrl.GET_USER_BY_CODE + code);
+		req.setHeader("X-AUTH-TOKEN", token);
+		CompletionStage<JsonNode> jsonPromise = req.get().thenApply(
+				WSResponse::asJson);
+		CompletableFuture<JsonNode> nodeFuture = jsonPromise
+				.toCompletableFuture();
+		JsonNode jData = null;
+		try {
+			jData = nodeFuture.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return jData;
 	}
 }
