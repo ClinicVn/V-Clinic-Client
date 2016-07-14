@@ -11,6 +11,12 @@ $(function(){
 		window.location.href = window.location.origin + "/logout";
 	});
 	$('#btnHome').click(function(){
-		window.location.href = window.location.origin;
+		window.location.href = window.location.origin + "";
+	});
+	$('#btnAccount').hover(function(){
+		document.getElementById("myDropdown").classList.add("show");
+	});
+	$(window).click(function(e){
+		document.getElementById("myDropdown").classList.remove("show");
 	});
 })

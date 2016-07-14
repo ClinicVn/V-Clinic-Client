@@ -123,7 +123,8 @@ public class UserService {
 		}
 		return lstView;
 	}
-
+	
+	
 	public JsonNode getUserByCode(String code, String token) {
 		WSRequest req = ws.url(ServiceUrl.GET_USER_BY_CODE + code);
 		req.setHeader("X-AUTH-TOKEN", token);
@@ -140,5 +141,22 @@ public class UserService {
 			return null;
 		}
 		return jData;
+	}
+	
+	public boolean deleteUser(String code, String token){
+		WSRequest req = ws.url(ServiceUrl.GET_USER_BY_CODE + code);
+		req.setHeader("X-AUTH-TOKEN", token);
+		CompletionStage<JsonNode> jsonPromise = req.delete().thenApply(
+				WSResponse::asJson);
+		CompletableFuture<JsonNode> nodeFuture = jsonPromise
+				.toCompletableFuture();
+		try {
+			JsonNode jData = nodeFuture.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

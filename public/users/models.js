@@ -6,14 +6,33 @@ function UserItem(data){
 	self.status = ko.observable(data.status);
 	self.phone = ko.observable(data.phone);
 	self.type = ko.observable(data.type);
+	self.email = ko.observable(data.email);
+	self.address = ko.observable(data.address);
 }
 UserItem.prototype.Edit = function(){
-	var x = window.location.origin + this.id();
-	window.location.href = window.location.origin + "/users/edit/" + this.id();
+	
 }
 UserItem.prototype.Info = function(){
 	
 }
 UserItem.prototype.Delete = function(){
-	
+	var result = confirm("Are you sure ?");
+	if(result === false)
+		return;
+	var self = this;
+	$.ajax({
+		url: window.location.origin + "/users/delete/" + self.id(),
+		type: 'DELETE',
+		success: function(res){
+			if(res === true){
+				alert("Deleted !");
+				window.location.href = window.location.origin + "/users/list";
+			}
+			else{
+				alert("Has an error !");
+				window.location.href = window.location.origin + "/users/list";
+			}
+				
+		}
+	});
 }

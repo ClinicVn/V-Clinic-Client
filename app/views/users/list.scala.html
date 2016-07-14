@@ -1,42 +1,44 @@
-@()
-@views.html.bases.masterpage("List User"){
-	<div class="user-list-head">
-        <link href="@routes.Assets.versioned("users/list/main.css")" rel="stylesheet" media="screen">
-        <script src="@routes.Assets.versioned("users/models.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("users/list/services.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("users/list/main.js")" type="text/javascript"></script>
-    </div>
-    <div>
-    	<input type="button" value="New User" id="btnNewUser" class="btn btn-primary"/>
-    </div>
-    <div class="user-list-content">
-    <table class="table table-striped">
-    	<thead>
-    		<tr>
-    			<th>User name</th>
-    			<th>Full Name</th>
-    			<th>Type</th>
-    			<th>Status</th>
-    			<th>Phone</th>
-    			<th></th>
-    		</tr>
-    	</thead>
-    	<tbody data-bind="foreach:lstUser">
-    		<tr class="user-row">
-    			<td>
-    				<span data-bind="text:code"></span>
-    			</td>
-    			<td data-bind="text:name"></td>
-    			<td data-bind="text:type"></td>
-    			<td data-bind="text:status"></td>
-    			<td data-bind="text:phone"></td>
-    			<td>
-	    			<!-- <i class="fa fa-info-circle user-list-setting-icon"></i> -->
-					<i class="fa fa-pencil user-list-setting-icon" data-bind="click:Edit"></i>
-					<i class="fa fa-trash user-list-setting-icon"></i>
-    			</td>
-    		</tr>
-    	</tbody>
-    </table>	
-    </div>
+@() @views.html.bases.masterpage("List User"){
+<div class="user-list-head">
+	<link href="@routes.Assets.versioned("users/list/main.css")" rel="stylesheet" media="screen"/>
+	<script src="@routes.Assets.versioned("users/models.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("users/list/services.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("users/list/main.js")" type="text/javascript"></script>
+</div>
+<div class="list-header">
+	<button type="button" class="btn btn-primary">
+		<i class="fa fa-search">&nbsp;</i>Search
+	</button>
+	<button type="button" class="btn btn-primary" id="btnNewUser">
+		<i class="fa fa-plus-square">&nbsp;</i>New
+	</button>
+</div>
+<br/>
+<table class="clinic-tbl" border="1">
+	<thead>
+		<tr>
+			<th class="clinic-col-header" >User name</th>
+			<th class="clinic-col-header" >Name</th>
+			<th class="clinic-col-header" >Phone number</th>
+			<th class="clinic-col-header" >Email</th>
+			<th class="clinic-col-header" >Type</th>
+			<th class="clinic-col-header" >Status</th>
+			<th class="clinic-col-header" ></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach:lstUser">
+		<tr>
+			<td data-bind="text:code" class="clinic-tbl-col-content" style="width:10%"></td>
+			<td data-bind="text:name" class="clinic-tbl-col-content" style="width:20%"></td>
+			<td data-bind="text:phone" class="clinic-tbl-col-content" style="width:14%"></td>
+			<td data-bind="text:email" class="clinic-tbl-col-content" style="width:20%"></td>
+			<td data-bind="text:type" class="clinic-tbl-col-content" style="width:8%"></td>
+			<td data-bind="text:status" class="clinic-tbl-col-content" style="width:8%"></td>
+			<td class="clinic-tbl-col-content" style="width:20%">
+				<button><i class="fa fa-edit" data-bind="click:Edit">&nbsp;</i>Edit</button>
+				<button data-bind="click:Delete"><i class="fa fa-trash-o">&nbsp;</i>Delete</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
 }

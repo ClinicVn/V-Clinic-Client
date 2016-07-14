@@ -16,7 +16,9 @@ ListUserService.prototype.getListUser = function(){
 				name: item.name,
 				status: item.status,
 				phone: item.phone,
-				type: item.type
+				type: item.type,
+				email: item.email,
+				address: item.ress
 			});
 		});
 		return lstMenu;

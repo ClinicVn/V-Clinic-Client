@@ -27,9 +27,14 @@
     </head>
     <body>
 	    <div id="panel-top" class="col-sm-12 master-panel col-xs-12" style="z-index:9999999999">
-	    	<img src="/assets/images/user_icon.png" class="master-user-logo"/>
-	    	<button id="btnHome" style="float:right">Home</button>
-	    	<button id="btnLogout" style="float:right">Log out</button>
+	    	<div class="dropdown" style="float:right">
+	    		<a href="#" id="btnAccount" style="color:white;">My account</a>
+	    		<div id="myDropdown" class="dropdown-content">
+				    <a href="#">Info</a>
+				    <a href="#" id="btnLogout">Logout</a>
+  				</div>
+	    	</div>
+	    	<a id="btnHome" style="float:right;color:white;margin-right:10px">Home</a>
 	    </div>
 	    <div style="margin-top:100px;margin-bottom:80px;">
 	        <div class="col-sm-2" id="panel-left master-panel">

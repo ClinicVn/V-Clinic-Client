@@ -4,9 +4,6 @@
 .user-row{
 	cursor: pointer;
 }
-thead{
-	background-color: #ea6153 !important;
-}
 .user-list-setting-icon{
 	width: 20px;
 	height: 20px;
@@ -14,4 +11,11 @@ thead{
 }
 .user-list-setting-icon:hover{
 	box-shadow: 2px 2px 2px #888888;
+}
+tbody tr:hover{
+	background-color:#A9A9A9;
+	cursor:pointer;
+}
+table {
+	width:100%;
 }

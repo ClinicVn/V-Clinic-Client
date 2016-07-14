@@ -60,6 +60,14 @@ public class UserController extends MasterPage {
 		return ok(views.html.users.edit.render(userNode.toString()));
 	}
 	
+	public Result delete(String code){
+		if(!this.CheckLogin())
+			return redirect(routes.HomeController.index());
+		boolean result =  userService.deleteUser(code, session(StringValue.V00001));
+		return ok(Json.toJson(result));
+			
+	}
+	
 	public Result getUserByCode(String code){
 		if(!this.CheckLogin())
 			return ok(Json.toJson(false));
