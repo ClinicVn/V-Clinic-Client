@@ -46,7 +46,7 @@ public class UserController extends MasterPage {
 
 	public Result create() {
 		if(this.CheckLogin())
-			return ok(views.html.users.info.render(Json.toJson("Create")));
+			return ok(views.html.users.info.render("Create"));
 		else
 			return redirect(routes.HomeController.index());
 	}
@@ -78,9 +78,10 @@ public class UserController extends MasterPage {
 	}
 	
 	public Result save() {
-		final Map<String, String[]> values = request().body()
-				.asFormUrlEncoded();
-		List<ClinicMessage> lstMsg = userService.validInputUserInfo(values, session(StringValue.V00001));
+		DynamicForm form = Form.form().bindFromRequest();
+		JsonNode userNode = Json.parse(form.get("data"));
+		int mode = Integer.parseInt(form.get("mode"));
+		List<ClinicMessage> lstMsg = userService.validInputUserInfo(mode, userNode, session(StringValue.V00001));
 		if(lstMsg.size() == 0 ){
 			lstMsg = userService.save(values, session(StringValue.V00001));
 		}

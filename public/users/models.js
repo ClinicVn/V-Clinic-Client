@@ -4,7 +4,7 @@ function UserItem(data){
 	self.code = ko.observable(data.code);
 	self.oldPassword = ko.observable(data.oldPassword);
 	self.password = ko.observable(data.password);
-	self.rePassword = ko.observable(data.repassword);
+	self.rePassword = ko.observable(data.rePassword);
 	self.name = ko.observable(data.name);
 	self.status = ko.observable(data.status);
 	self.phone = ko.observable(data.phone);

@@ -1,5 +1,6 @@
 function UserInfoScreen(user){
 	var self = this;
+	self.isChangePassword = ko.observable(false);
 	if($('#info-mode').text() === "Create")
 		self.mode = InfoMode.Create;
 	else
@@ -9,20 +10,20 @@ function UserInfoScreen(user){
 UserInfoScreen.prototype.save = function(){
 	var self = this;
 	var saveData = {};
-	saveData.code = self.code();
+	saveData.code = self.insUser().code();
 	if(self.mode === InfoMode.Edit)
 	{
-		saveData.oldPassword = self.oldPassword();
+		saveData.oldPassword = self.insUser().oldPassword();
 	}
-	saveData.password = self.password();
-	saveData.rePassword = self.rePassword();
-	saveData.name = self.name();
-	saveData.email = self.mail();
-	saveData.phone = self.phone();
-	saveData.type = self.type();
-	saveData.address = self.address();
+	saveData.password = self.insUser().password();
+	saveData.rePassword = self.insUser().rePassword();
+	saveData.name = self.insUser().name();
+	saveData.email = self.insUser().email();
+	saveData.phone = self.insUser().phone();
+	saveData.type = self.insUser().type();
+	saveData.address = self.insUser().address();
 	UserInfoService.save({
-		user: saveData,
+		data: JSON.stringify(saveData),
 		mode: self.mode
 	});
 }
@@ -31,38 +32,17 @@ var InfoMode = {
 	Edit: 2
 };
 $(function() {
-	
-	/*// event
-	$('#lstLanguage').change(function() {
-
-	});
-	// validator
-	var userValidator = new FormValidator('create-form', [ {
-		name : 'code',
-		rules : 'required|min_length[5]|max_length[30]'
-	}, {
-		name : 'password',
-		rules : 'required|min_length[9]|max_length[30]'
-	}, {
-		name : 'retype-password',
-		rules : 'required|matches[password]'
-	}, {
-		name : 'name',
-		rules : 'required|min_length[5]'
-	}, {
-		name : 'email',
-		rules : 'required|valid_email'
-	}, {
-		name : 'phone_number',
-		rules : 'required|integer'
-	} ], function(errors, event) {
-		$('.error').remove();
-		$.each(errors, function(index, item) {
-			var $LblError = $('<label></label>');
-			$LblError.addClass('error');
-			$LblError.text(item.message);
-			$(item.element).after($LblError);
-		});
-		return false;
-	});*/
+	ko.applyBindings(new UserInfoScreen({
+		code: "",
+		oldPassword: "",
+		password: "",
+		rePassword: "",
+		name: "",
+		status: "",
+		phone: "",
+		type: "",
+		email: "",
+		address: "",
+		isEdit : false
+	}));
 })

@@ -1,6 +1,7 @@
 var UserInfoService = {};
 UserInfoService.save = function(data){
-	$.post(window.location.origin + "/users/save/",data).done(function(){
-		
+	var x = JSON.stringify(data);
+	$.post(window.location.origin + "/users/save/",data).done(function(res){
+		var x = res;
 	});
 }

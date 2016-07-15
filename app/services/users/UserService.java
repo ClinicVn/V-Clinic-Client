@@ -63,17 +63,16 @@ public class UserService {
 	}
 
 	public List<ClinicMessage> validInputUserInfo(
-			Map<String, String[]> dataMap, String token) {
+			int mode,JsonNode dataNode, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
 		JsonNode jUser = null;
 		try {
-			jUser = Json.parse(dataMap.get("data")[0]);
-			String account = dataMap.get("code")[0];
-			String password = dataMap.get("password")[0];
-			String re_password = dataMap.get("retype-password")[0];
-			String name = dataMap.get("name")[0];
-			String phone = dataMap.get("phone_number")[0];
-			String type = dataMap.get("type")[0];
+			String account = dataNode.get("code").asText();
+			String password = dataNode.get("password").asText();
+			String re_password = dataNode.get("rePassword").asText();
+			String name = dataNode.get("name").asText();
+			String phone = dataNode.get("phone").asText();
+			String type = dataNode.get("type").asText();
 			// account check
 			if (account.trim() == "")
 				lstError.add(new ClinicMessage("username", StringValue.ERR00005));
