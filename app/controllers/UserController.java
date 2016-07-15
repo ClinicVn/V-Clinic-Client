@@ -46,7 +46,7 @@ public class UserController extends MasterPage {
 
 	public Result create() {
 		if(this.CheckLogin())
-			return ok(views.html.users.create.render(ul));
+			return ok(views.html.users.info.render(Json.toJson("Create")));
 		else
 			return redirect(routes.HomeController.index());
 	}
@@ -57,7 +57,7 @@ public class UserController extends MasterPage {
 		JsonNode userNode =  userService.getUserByCode(code, session(StringValue.V00001));
 		if(userNode == null)
 			return ok(Json.toJson(false));
-		return ok(views.html.users.edit.render(userNode.toString()));
+		return ok(views.html.users.info.render(userNode.toString()));
 	}
 	
 	public Result delete(String code){

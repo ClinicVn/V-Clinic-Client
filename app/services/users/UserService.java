@@ -49,7 +49,7 @@ public class UserService {
 			user.setName(dataMap.get("name")[0]);
 			user.setAddress(dataMap.get("address")[0]);
 			user.setEmail(dataMap.get("email")[0]);
-			user.setPhoneNumber(dataMap.get("phone_number")[0]);
+			user.setPhoneNumber(dataMap.get("phone")[0]);
 			user.setType(dataMap.get("type")[0]);
 			// save user
 			WSRequest req = ws.url(ServiceUrl.SAVE_USER);
@@ -65,7 +65,9 @@ public class UserService {
 	public List<ClinicMessage> validInputUserInfo(
 			Map<String, String[]> dataMap, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
+		JsonNode jUser = null;
 		try {
+			jUser = Json.parse(dataMap.get("data")[0]);
 			String account = dataMap.get("code")[0];
 			String password = dataMap.get("password")[0];
 			String re_password = dataMap.get("retype-password")[0];
@@ -123,7 +125,6 @@ public class UserService {
 		}
 		return lstView;
 	}
-	
 	
 	public JsonNode getUserByCode(String code, String token) {
 		WSRequest req = ws.url(ServiceUrl.GET_USER_BY_CODE + code);

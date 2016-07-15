@@ -2,12 +2,16 @@ function UserItem(data){
 	var self = this;
 	self.id = ko.observable(data.id);
 	self.code = ko.observable(data.code);
+	self.oldPassword = ko.observable(data.oldPassword);
+	self.password = ko.observable(data.password);
+	self.rePassword = ko.observable(data.repassword);
 	self.name = ko.observable(data.name);
 	self.status = ko.observable(data.status);
 	self.phone = ko.observable(data.phone);
 	self.type = ko.observable(data.type);
 	self.email = ko.observable(data.email);
 	self.address = ko.observable(data.address);
+	self.isEdit = ko.observable(data.isEdit);
 }
 UserItem.prototype.Edit = function(){
 	

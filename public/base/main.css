@@ -63,6 +63,27 @@
 	background-color: #00008B !important;
 	color: white;
 }
+.clinic-row-header{
+	background-color: #DCDCDC;
+	text-align: right;
+	font-weight: bold;
+	padding-right:3px;
+	width:20%;
+}
+.input-error{
+	border:1px solid red;
+}
+.clinic-btn{
+	margin-top:3px;
+	margin-bottom:3px;
+	border-radius: 2px 2px 2px 2px;
+}
+.table-text-input{
+    width: 95%;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin:2px 2px 2px 2px;
+}
 .clinic-tbl-col-content{
 	height:30px;
 }

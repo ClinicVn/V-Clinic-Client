@@ -34,3 +34,6 @@ h2 {
 	max-width: 600px !important;
 	padding-bottom:10px;
 }
+table{
+	border-collapse: inherit !important;
+}
