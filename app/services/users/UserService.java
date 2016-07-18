@@ -39,23 +39,14 @@ public class UserService {
 		return password.equals(confirmPassword);
 	}
 
-	public List<ClinicMessage> save(Map<String, String[]> dataMap, String token) {
+	public List<ClinicMessage> save(JsonNode jUser,String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
-		JsonNode jn = Json.toJson(dataMap);
 		try {
-			User user = new User();
-			user.setCode(dataMap.get("code")[0]);
-			user.setPassword(dataMap.get("password")[0]);
-			user.setName(dataMap.get("name")[0]);
-			user.setAddress(dataMap.get("address")[0]);
-			user.setEmail(dataMap.get("email")[0]);
-			user.setPhoneNumber(dataMap.get("phone")[0]);
-			user.setType(dataMap.get("type")[0]);
 			// save user
 			WSRequest req = ws.url(ServiceUrl.SAVE_USER);
 			req.setContentType("application/form-data");
 			req.setHeader("X-AUTH-TOKEN", token);
-			req.post(user.getCreate());
+			req.post(jUser);
 		} catch (Exception ex) {
 			lstError.add(new ClinicMessage("Exception", StringValue.ERR00000));
 		}

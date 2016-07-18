@@ -83,7 +83,7 @@ public class UserController extends MasterPage {
 		int mode = Integer.parseInt(form.get("mode"));
 		List<ClinicMessage> lstMsg = userService.validInputUserInfo(mode, userNode, session(StringValue.V00001));
 		if(lstMsg.size() == 0 ){
-			lstMsg = userService.save(values, session(StringValue.V00001));
+			lstMsg = userService.save(userNode, session(StringValue.V00001));
 		}
 		if(lstMsg.size() == 0){
 			return redirect(routes.UserController.index());
