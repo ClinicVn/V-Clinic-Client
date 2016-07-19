@@ -88,15 +88,6 @@ public class UserController extends MasterPage {
 		if(lstMsg.size() == 0 ){
 			lstMsg = userService.save(userNode, session(StringValue.V00001));
 		}
-		else{
-			return ok(Json.toJson(lstMsg));
-		}
-		if(lstMsg.size() == 0){
-			return redirect(routes.UserController.index());
-		}
-		else
-		{
-			return ok(Json.toJson(false));
-		}
+		return ok(Json.toJson(lstMsg));
 	}
 }

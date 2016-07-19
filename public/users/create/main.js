@@ -9,23 +9,7 @@ function UserInfoScreen(user){
 }
 UserInfoScreen.prototype.save = function(){
 	var self = this;
-	var saveData = {};
-	saveData.code = self.insUser().code();
-	if(self.mode === InfoMode.Edit)
-	{
-		saveData.oldPassword = self.insUser().oldPassword();
-	}
-	saveData.password = self.insUser().password();
-	saveData.rePassword = self.insUser().rePassword();
-	saveData.name = self.insUser().name();
-	saveData.email = self.insUser().email();
-	saveData.phone = self.insUser().phone();
-	saveData.type = self.insUser().type();
-	saveData.address = self.insUser().address();
-	UserInfoService.save({
-		data: JSON.stringify(saveData),
-		mode: self.mode
-	});
+	UserInfoService.create(self.insUser());
 }
 var InfoMode = {
 	Create: 1,

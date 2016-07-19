@@ -58,13 +58,17 @@ public class UserService {
 			int mode,JsonNode dataNode, String token) {
 		List<ClinicMessage> lstError = new ArrayList<ClinicMessage>();
 		// user validate
-		String userCode = dataNode.get("userNode").asText();
-		String userId = dataNode.get("gid").asText();
+		String userCode = dataNode.get("userCode").asText();
 		if(userCode.trim().length() < 5 || userCode.trim().length() > 30){
 			lstError.add(new ClinicMessage("userCode", "Invalid Account"));
 		}
-		else if(this.getUserByCode(userId, token).has("error")){
-			lstError.add(new ClinicMessage("userCode", "Exist Account"));
+		else{
+			for(JsonNode user: this.getListUser(token)){
+				if(user.get("userCode").asText().equals(userCode)){
+					lstError.add(new ClinicMessage("userCode", "Exist Account"));
+					break;
+				}
+			}
 		}
 		// password valid
 		String password = dataNode.get("userPwd").asText().trim();
@@ -110,17 +114,9 @@ public class UserService {
 	public boolean deleteUser(String code, String token){
 		WSRequest req = ws.url(ServiceUrl.GET_USER_BY_CODE + code);
 		req.setHeader("X-AUTH-TOKEN", token);
-		CompletionStage<JsonNode> jsonPromise = req.delete().thenApply(
-				WSResponse::asJson);
-		CompletableFuture<JsonNode> nodeFuture = jsonPromise
-				.toCompletableFuture();
-		try {
-			JsonNode jData = nodeFuture.get();
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		JsonNode jData = ServiceUrl.delete(req);
+		if(jData == null)
 			return false;
-		}
 		return true;
 	}
 }
