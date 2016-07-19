@@ -20,14 +20,14 @@ public class ServiceUrl {
 	// login
 	public static String LOGIN_SUBMIT = SERVICE_HOST + "/login";
 	
-	public static JsonNode post(WSRequest rq, JsonNode input){
-		return ServiceUrl.getNode(rq.post(input).thenApply(WSResponse::asJson).toCompletableFuture());
+	public static JsonNode post(WSRequest req, JsonNode input){
+		return ServiceUrl.getNode(req.post(input).thenApply(WSResponse::asJson).toCompletableFuture());
 	}
-	public static JsonNode get(WSRequest rq){
-		return ServiceUrl.getNode(rq.get().thenApply(WSResponse::asJson).toCompletableFuture());
+	public static JsonNode get(WSRequest req){
+		return ServiceUrl.getNode(req.get().thenApply(WSResponse::asJson).toCompletableFuture());
 	}
-	public static JsonNode delete(WSRequest rq){
-		return ServiceUrl.getNode(rq.delete().thenApply(WSResponse::asJson).toCompletableFuture());
+	public static JsonNode delete(WSRequest req){
+		return ServiceUrl.getNode(req.delete().thenApply(WSResponse::asJson).toCompletableFuture());
 	}
 	private static JsonNode getNode(CompletableFuture<JsonNode> nodeFuture){
 		

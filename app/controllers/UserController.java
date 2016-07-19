@@ -33,57 +33,63 @@ public class UserController extends MasterPage {
 
 	public Result list() {
 		ArrayNode lstView = userService.getListUser(session(StringValue.V00001));
-		if(lstView == null)
+		if (lstView == null)
 			return ok(Json.toJson(false));
 		return ok(lstView);
 	}
+
 	public Result index() {
-		if(this.CheckLogin())
+		if (this.CheckLogin())
 			return ok(views.html.users.list.render());
 		else
 			return redirect(routes.HomeController.index());
 	}
 
 	public Result create() {
-		if(this.CheckLogin())
+		if (this.CheckLogin())
 			return ok(views.html.users.info.render("Create"));
 		else
 			return redirect(routes.HomeController.index());
 	}
-	
-	public Result edit(String code){
-		if(!this.CheckLogin())
+
+	public Result edit(String code) {
+		if (!this.CheckLogin())
 			return redirect(routes.HomeController.index());
-		JsonNode userNode =  userService.getUserByCode(code, session(StringValue.V00001));
-		if(userNode == null)
+		JsonNode userNode = userService.getUserByCode(code, session(StringValue.V00001));
+		if (userNode == null)
 			return ok(Json.toJson(false));
 		return ok(views.html.users.info.render(userNode.toString()));
 	}
-	
-	public Result delete(String code){
-		if(!this.CheckLogin())
+
+	public Result delete(String code) {
+		if (!this.CheckLogin())
 			return redirect(routes.HomeController.index());
-		boolean result =  userService.deleteUser(code, session(StringValue.V00001));
+		boolean result = userService.deleteUser(code, session(StringValue.V00001));
 		return ok(Json.toJson(result));
-			
+
 	}
-	
-	public Result getUserByCode(String code){
-		if(!this.CheckLogin())
+
+	public Result getUserByCode(String code) {
+		if (!this.CheckLogin())
 			return ok(Json.toJson(false));
-		JsonNode userNode =  userService.getUserByCode(code, session(StringValue.V00001));
-		if(userNode == null)
+		JsonNode userNode = userService.getUserByCode(code, session(StringValue.V00001));
+		if (userNode == null)
 			return ok(Json.toJson(false));
 		return ok(userNode);
 	}
-	
+
 	public Result save() {
 		DynamicForm form = Form.form().bindFromRequest();
 		JsonNode userNode = Json.parse(form.get("data"));
 		int mode = Integer.parseInt(form.get("mode"));
-		List<ClinicMessage> lstMsg = userService.validInputUserInfo(mode, userNode, session(StringValue.V00001));
+		List<ClinicMessage> lstMsg = new ArrayList<ClinicMessage>();
+		if(mode == 1)
+			lstMsg = userService.validCreateInfo(mode, userNode, session(StringValue.V00001));
 		if(lstMsg.size() == 0 ){
 			lstMsg = userService.save(userNode, session(StringValue.V00001));
+		}
+		else{
+			return ok(Json.toJson(lstMsg));
 		}
 		if(lstMsg.size() == 0){
 			return redirect(routes.UserController.index());
