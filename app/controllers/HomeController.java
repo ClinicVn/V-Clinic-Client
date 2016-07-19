@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import Com.StringValue;
 import play.*;
 import play.api.mvc.Session;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
 import services.home.HomeServices;
@@ -39,11 +41,9 @@ public class HomeController extends MasterPage {
     	}
     }
     public Result login(){
-    	final Map<String, String[]> values = request().body().asFormUrlEncoded();
-		String username = values.get("username")[0];
-		String password = values.get("password")[0];
+    	DynamicForm form = Form.form().bindFromRequest();
 		boolean result = true;
-		String sResult = homeServices.isValidLogin(username, password);
+		String sResult = homeServices.isValidLogin(form);
 		if(sResult == ""){
 			result = false;
 		}

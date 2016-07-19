@@ -11,14 +11,14 @@ ListUserService.prototype.getListUser = function(){
 		var lstMenu = new Array();
 		$.each(res,function(index, item){
 			lstMenu.push({
-				id: item.id,
-				code: item.code,
-				name: item.name,
+				id: item.gid,
+				code: item.userCode,
+				name: item.fullname,
 				status: item.status,
-				phone: item.phone,
+				phone: item.userPhone,
 				type: item.type,
-				email: item.email,
-				address: item.ress
+				email: item.userEmail,
+				address: item.address
 			});
 		});
 		return lstMenu;

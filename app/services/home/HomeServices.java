@@ -11,45 +11,39 @@ import javax.inject.Inject;
 
 import Com.ServiceUrl;
 import models.Menu;
+import play.data.DynamicForm;
+import play.libs.Json;
 import play.libs.ws.*;
 import com.fasterxml.jackson.databind.*;
 
 public class HomeServices {
-	@Inject 
+	@Inject
 	public static String AUTHEN_TOKEN = "";
-	@Inject 
+	@Inject
 	WSClient ws;
-	public List<Menu> getListMenu(){
+
+	public List<Menu> getListMenu() {
 		List<Menu> lstMenu = new ArrayList<Menu>();
-    	lstMenu.add(new Menu("01","User setting","/users/list","/assets/images/menu_support.jpg"));
-    	lstMenu.add(new Menu("01","User setting","#","/assets/images/menu_support.jpg"));
-    	lstMenu.add(new Menu("01","User setting","#",""));
-    	lstMenu.add(new Menu("01","User setting","#",""));
-    	lstMenu.add(new Menu("01","User setting","#",""));
+		lstMenu.add(new Menu("01", "User setting", "/users/list", "/assets/images/menu_support.jpg"));
+		lstMenu.add(new Menu("01", "User setting", "#", "/assets/images/menu_support.jpg"));
+		lstMenu.add(new Menu("01", "User setting", "#", ""));
+		lstMenu.add(new Menu("01", "User setting", "#", ""));
+		lstMenu.add(new Menu("01", "User setting", "#", ""));
 		return lstMenu;
 	}
-	public boolean isLogin(){
-		if(HomeServices.AUTHEN_TOKEN == "")
+
+	public boolean isLogin() {
+		if (HomeServices.AUTHEN_TOKEN == "")
 			return false;
 		return true;
 	}
-	public String isValidLogin(String username, String password){
-		WSRequest rq = ws.url(ServiceUrl.LOGIN_SUBMIT);
-		CompletionStage<JsonNode> jsonPromise = rq.setContentType("application/x-www-form-urlencoded")
-        .post("account="+ username + "&password=" + password).thenApply(WSResponse::asJson);
-		CompletableFuture<JsonNode> nodeFuture =  jsonPromise.toCompletableFuture();
-		JsonNode jData = null;
-		try {
-			 jData = nodeFuture.get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	public String isValidLogin(DynamicForm form) {
+		WSRequest rq = ws.url(ServiceUrl.LOGIN_SUBMIT).setContentType("application/x-www-form-urlencoded");
+		JsonNode returnNode = ServiceUrl.post(rq, Json.toJson(form.data()));
+		if(returnNode != null)
+			return returnNode.get("authToken").asText();
+		else
 			return "";
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "";
-		}
-		return jData.get("authToken").asText();
 	}
 }
