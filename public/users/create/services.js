@@ -13,12 +13,5 @@ UserInfoService.create = function(data) {
 			rePassword : data.rePassword()
 		}),
 		mode : 1
-	}).then(function(res) {
-		if(res.length == 0){
-			window.location.href = window.location.origin + "/users/list";
-		}
-		else{
-			alert(JSON.stringify(res));
-		}
 	});
 }

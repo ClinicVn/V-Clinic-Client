@@ -8,8 +8,17 @@ function UserInfoScreen(user){
 	self.insUser = ko.observable(new UserItem(user));
 }
 UserInfoScreen.prototype.save = function(){
+	$('.user-info-input').removeClass('error-field');
 	var self = this;
-	UserInfoService.create(self.insUser());
+	UserInfoService.create(self.insUser()).done(function(res){
+		if(res.length == 0){
+			window.location.href = window.location.origin + "/users/list";
+		}else{
+			$.each(res, function(index, errItem){
+				$('#'+ errItem.clientId).addClass('error-field');
+			});
+		}
+	});
 }
 var InfoMode = {
 	Create: 1,

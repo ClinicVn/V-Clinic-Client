@@ -4,7 +4,9 @@
 	font-size: 12px;
 }
 form { margin: 0px 10px; }
-
+.error-field{
+	border: 1px solid red;
+}
 h2 {
   margin-top: 2px;
   margin-bottom: 2px;
