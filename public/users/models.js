@@ -13,8 +13,9 @@ function UserItem(data){
 	self.address = ko.observable(data.address);
 	self.isEdit = ko.observable(data.isEdit);
 }
-UserItem.prototype.Edit = function(){
-	
+UserItem.prototype.onEdit = function(){
+	var self = this;
+	window.location.href = window.location.origin + "/users/edit/" + self.id();
 }
 UserItem.prototype.Info = function(){
 	

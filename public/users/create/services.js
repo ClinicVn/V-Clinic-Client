@@ -1,7 +1,8 @@
 var UserInfoService = {};
-UserInfoService.create = function(data) {
+UserInfoService.save = function(mode, data) {
 	return $.post(window.location.origin + "/users/save/", {
 		data : JSON.stringify({
+			gid: data.id(),
 			userCode : data.code(),
 			userPwd : data.password(),
 			status : "1",
@@ -12,6 +13,6 @@ UserInfoService.create = function(data) {
 			address : data.address(),
 			rePassword : data.rePassword()
 		}),
-		mode : 1
+		mode : mode
 	});
 }

@@ -46,8 +46,11 @@ public class UserController extends MasterPage {
 	}
 
 	public Result create() {
-		if (this.CheckLogin())
-			return ok(views.html.users.info.render("Create"));
+		if (this.CheckLogin()){
+			ObjectNode node = Json.newObject();
+			node.put("mode", 1);
+			return ok(views.html.users.info.render(node.toString()));
+		}
 		else
 			return redirect(routes.HomeController.index());
 	}
@@ -56,9 +59,12 @@ public class UserController extends MasterPage {
 		if (!this.CheckLogin())
 			return redirect(routes.HomeController.index());
 		JsonNode userNode = userService.getUserByCode(code, session(StringValue.V00001));
+		ObjectNode node = Json.newObject();
+		node.put("mode", 2);
+		node.put("user", userNode.toString());
 		if (userNode == null)
 			return ok(Json.toJson(false));
-		return ok(views.html.users.info.render(userNode.toString()));
+		return ok(views.html.users.info.render(node.toString()));
 	}
 
 	public Result delete(String code) {
@@ -83,10 +89,9 @@ public class UserController extends MasterPage {
 		JsonNode userNode = Json.parse(form.get("data"));
 		int mode = Integer.parseInt(form.get("mode"));
 		List<ClinicMessage> lstMsg = new ArrayList<ClinicMessage>();
-		if(mode == 1)
-			lstMsg = userService.validCreateInfo(mode, userNode, session(StringValue.V00001));
+		lstMsg = userService.validCreateInfo(mode, userNode, session(StringValue.V00001));
 		if(lstMsg.size() == 0 ){
-			lstMsg = userService.save(userNode, session(StringValue.V00001));
+			lstMsg = userService.save(mode,userNode, session(StringValue.V00001));
 		}
 		return ok(Json.toJson(lstMsg));
 	}

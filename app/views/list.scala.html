@@ -27,7 +27,6 @@
     <tbody>
     
     @for(product <- products) {
-
       <tr>
         <td><a href="@routes.ProductController.details(product.ean)">@product.ean</a></td>
         <td><a href="@routes.ProductController.details(product.ean)">@product.name</a></td>

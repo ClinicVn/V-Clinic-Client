@@ -11,7 +11,7 @@ import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 
 public class ServiceUrl {
-	private static String SERVICE_HOST = "http://45.117.160.37";
+	private static String SERVICE_HOST = "http://45.117.160.37:9999";
 	// User 
 	public static String GET_LIST_USER = SERVICE_HOST +   "/users";
 	public static String SAVE_USER = SERVICE_HOST + "/users";
@@ -22,6 +22,9 @@ public class ServiceUrl {
 	
 	public static JsonNode post(WSRequest req, JsonNode input){
 		return ServiceUrl.getNode(req.post(input).thenApply(WSResponse::asJson).toCompletableFuture());
+	}
+	public static JsonNode put(WSRequest req, JsonNode input){
+		return ServiceUrl.getNode(req.put(input).thenApply(WSResponse::asJson).toCompletableFuture());
 	}
 	public static JsonNode get(WSRequest req){
 		return ServiceUrl.getNode(req.get().thenApply(WSResponse::asJson).toCompletableFuture());

@@ -1,11 +1,69 @@
-@(mode : String)
+@(data : String)
 @views.html.bases.masterpage("Create new user"){
 	<link href="@routes.Assets.versioned("users/create/main.css")" rel="stylesheet" media="screen" />
 	<script src="@routes.Assets.versioned("users/models.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("users/create/services.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("users/create/main.js")" type="text/javascript"></script>
-<span style="visibility:hidden" id="info-mode">@mode</span>
-<table style="width:100%;" border="1">
+<span style="visibility:hidden" id="info-init-data">@data</span>
+<table style="width:100%;" border="1" data-bind="visible: isCreate">
+<thead>
+	<tr>			
+		<td colspan="4" style="text-align:left;padding-left:5px;font-size:20px;" class="clinic-col-header">
+			Create user
+		</td>
+	</tr>
+<thead>
+	<tbody data-bind="with:insUser">
+		<tr>
+			<td class="clinic-row-header">Username</td>
+			<td>
+				<input type="text" class="table-text-input user-info-input" data-bind="value:code" id="userCode" tabindex="1"/>
+			</td>
+			<td class="clinic-row-header">Phone</td>
+			<td>
+				<input tabindex="5" type="text" class="table-text-input user-info-input" data-bind="value:phone"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="clinic-row-header">Password*</td>
+			<td>
+				<input tabindex="2" type="password" class="table-text-input user-info-input" data-bind="value:password" id="userPwd"/>
+			</td>
+			<td class="clinic-row-header">Email</td>
+			<td>
+				<input tabindex="6" type="text" class="table-text-input user-info-input" data-bind="value:email" id="userEmail"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="clinic-row-header">Retype-password*</td>
+			<td>
+				<input tabindex="3" type="password" class="table-text-input user-info-input" data-bind="value:rePassword" id="rePassword"/>
+			</td>
+			<td class="clinic-row-header">Address</td>
+			<td>
+				<input tabindex="7" type="text" class="table-text-input user-info-input" data-bind="value:address"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="clinic-row-header">Type</td>
+			<td>
+				<input tabindex="4" type="text" class="table-text-input user-info-input" data-bind="value:type" id="type"/>
+			</td>
+			<td class="clinic-row-header">Full name</td>
+			<td>
+				<input tabindex="8" type="text" class="table-text-input user-info-input" data-bind="value:name" id="fullname"/>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4" style="text-align:left:padding-left:5px">
+				<button class="clinic-btn" id="btn-signup" data-bind="click:save" tabindex="9">Sign up</button>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<table style="width:100%;" border="1" data-bind="visible: isEdit">
 <thead>
 	<tr>			
 		<td colspan="4" style="text-align:left;padding-left:5px;font-size:20px;" class="clinic-col-header">
@@ -17,7 +75,7 @@
 		<tr>
 			<td class="clinic-row-header">Username</td>
 			<td>
-				<input type="text" class="table-text-input user-info-input" data-bind="value:code" id="userCode"/>
+				<span data-bind="text: code"></span>
 			</td>
 			<td class="clinic-row-header">Phone</td>
 			<td>
@@ -25,9 +83,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="clinic-row-header">Password*</td>
+			<td class="clinic-row-header">Full name</td>
 			<td>
-				<input type="password" class="table-text-input user-info-input" data-bind="value:password" id="userPwd"/>
+				<input type="text" class="table-text-input user-info-input" data-bind="value:name" id="fullname"/>
 			</td>
 			<td class="clinic-row-header">Email</td>
 			<td>
@@ -35,30 +93,20 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="clinic-row-header">Retype-password*</td>
+			<td class="clinic-row-header">Type</td>
 			<td>
-				<input type="password" class="table-text-input user-info-input" data-bind="value:rePassword" id="rePassword"/>
+				<input type="text" class="table-text-input user-info-input" data-bind="value:type" id="type"/>
 			</td>
 			<td class="clinic-row-header">Address</td>
 			<td>
 				<input type="text" class="table-text-input user-info-input" data-bind="value:address"/>
 			</td>
 		</tr>
-		<tr>
-			<td class="clinic-row-header">Type</td>
-			<td>
-				<input type="text" class="table-text-input user-info-input" data-bind="value:type" id="type"/>
-			</td>
-			<td class="clinic-row-header">Full name</td>
-			<td>
-				<input type="text" class="table-text-input user-info-input" data-bind="value:name" id="fullname"/>
-			</td>
-		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<td colspan="4" style="text-align:left:padding-left:5px">
-				<button class="clinic-btn" id="btn-signup" data-bind="click:save">Sign up</button>
+				<button class="clinic-btn" id="btn-signup" data-bind="click:save">Save</button>
 			</td>
 		</tr>
 	</tfoot>
